@@ -46,11 +46,17 @@ export async function POST(request: NextRequest) {
           console.log(`Audio generated for page ${page.pageNumber}`);
 
           // Convert audio stream to base64
-          const chunks: Buffer[] = [];
-          for await (const chunk of audio) {
-            chunks.push(Buffer.from(chunk));
+          const chunks: Uint8Array[] = [];
+          const reader = audio.getReader();
+          let done = false;
+          while (!done) {
+            const result = await reader.read();
+            if (result.value) {
+              chunks.push(result.value);
+            }
+            done = result.done;
           }
-          const audioBuffer = Buffer.concat(chunks);
+          const audioBuffer = Buffer.concat(chunks.map(chunk => Buffer.from(chunk)));
           const base64Audio = audioBuffer.toString("base64");
 
           console.log(`Page ${page.pageNumber}: Generated ${base64Audio.length} bytes`);
@@ -58,16 +64,17 @@ export async function POST(request: NextRequest) {
             pageNumber: page.pageNumber,
             audioUrl: `data:audio/mpeg;base64,${base64Audio}`,
           };
-        } catch (error: any) {
+        } catch (error: unknown) {
+          const err = error as Error;
           console.error(`❌ Error generating audio for page ${page.pageNumber}:`);
-          console.error("Error message:", error?.message);
-          console.error("Error name:", error?.name);
-          console.error("Error stack:", error?.stack);
+          console.error("Error message:", err?.message);
+          console.error("Error name:", err?.name);
+          console.error("Error stack:", err?.stack);
           console.error("Full error:", JSON.stringify(error, null, 2));
           return {
             pageNumber: page.pageNumber,
             audioUrl: null,
-            error: error?.message || "Failed to generate audio",
+            error: err?.message || "Failed to generate audio",
           };
         }
       })
@@ -75,14 +82,15 @@ export async function POST(request: NextRequest) {
 
     console.log("All audio generation complete");
     return NextResponse.json({ audioResults });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const err = error as Error;
     console.error("❌ Fatal error in narrate API:");
-    console.error("Error message:", error?.message);
-    console.error("Error name:", error?.name);
-    console.error("Error stack:", error?.stack);
+    console.error("Error message:", err?.message);
+    console.error("Error name:", err?.name);
+    console.error("Error stack:", err?.stack);
     console.error("Full error:", JSON.stringify(error, null, 2));
     return NextResponse.json(
-      { error: `Failed to generate narration: ${error?.message || "Unknown error"}` },
+      { error: `Failed to generate narration: ${err?.message || "Unknown error"}` },
       { status: 500 }
     );
   }

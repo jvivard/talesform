@@ -88,7 +88,7 @@ export function SummaryStep({
 
         {!hasAnyData && (
           <p className="text-sm text-muted-foreground italic pt-2">
-            You haven't specified any preferences. We'll create a surprise story for you!
+            You haven&apos;t specified any preferences. We&apos;ll create a surprise story for you!
           </p>
         )}
       </Card>

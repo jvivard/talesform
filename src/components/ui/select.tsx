@@ -48,7 +48,7 @@ function Select({ value, onValueChange, children }: SelectProps) {
 }
 
 function SelectTrigger({ className, children }: SelectTriggerProps) {
-  const { value, isOpen, setIsOpen } = React.useContext(SelectContext)
+  const { isOpen, setIsOpen } = React.useContext(SelectContext)
   
   return (
     <button

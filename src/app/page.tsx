@@ -40,7 +40,7 @@ export default function TalesformPage() {
     pageCount: 5,
   })
   const [isGenerating, setIsGenerating] = React.useState(false)
-  const [storyResult, setStoryResult] = React.useState<any>(null)
+  const [storyResult, setStoryResult] = React.useState<Story | null>(null)
   const [isRandomized, setIsRandomized] = React.useState(false)
 
   function next() {
@@ -146,12 +146,12 @@ export default function TalesformPage() {
   }
 
   return (
-      <main className="min-h-screen" style={{ backgroundColor: '#FFF8E7' }}>
+      <main className="min-h-screen bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/MainBack.png')" }}>
         <div className="min-h-screen pt-48">
         <section className="container mx-auto max-w-5xl px-4 py-12 sm:py-35">
           <Card className="rounded-xl sm:rounded-2xl border shadow-sm bg-white/40 backdrop-blur">
           <CardContent className="p-3 sm:p-4 md:p-6">
-            <Stepper steps={steps as any} current={current} onStepClick={setCurrent} className="mb-4 sm:mb-6" />
+            <Stepper steps={steps as unknown as Array<{ key: string; title: string; subtitle?: string }>} current={current} onStepClick={setCurrent} className="mb-4 sm:mb-6" />
 
             {/* Step content */}
             {current === 1 && (

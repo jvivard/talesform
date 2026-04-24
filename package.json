@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@ai-sdk/fal": "^1.0.5",
     "@ai-sdk/google": "^2.0.5",
     "@ai-sdk/google-vertex": "^3.0.34",
     "@elevenlabs/elevenlabs-js": "^2.20.1",
