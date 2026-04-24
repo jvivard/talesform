@@ -6,14 +6,14 @@ import { Card } from "@/components/ui/card"
 import { Spinner } from "@/components/ui/spinner"
 import { Play, Pause } from "lucide-react"
 
-interface StoryPage {
+export interface StoryPage {
   pageNumber: number
   title: string
   content: string
   imageUrl?: string
 }
 
-interface Story {
+export interface Story {
   title: string
   coverImageUrl?: string
   pages: StoryPage[]

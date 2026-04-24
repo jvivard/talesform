@@ -9,7 +9,7 @@ import { GenderStep } from "@/components/talesform/gender-step"
 import { CustomStep } from "@/components/talesform/custom-step"
 import { SettingStep } from "@/components/talesform/setting-step"
 import { SummaryStep } from "@/components/talesform/summary-step"
-import { StoryResultStep } from "@/components/talesform/story-result-step"
+import { StoryResultStep, type Story } from "@/components/talesform/story-result-step"
 import { PageCountStep } from "@/components/talesform/page-count-step"
 
 const steps = [
