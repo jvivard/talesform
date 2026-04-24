@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client"
 
 import * as React from "react"
@@ -128,8 +129,9 @@ export function StoryResultStep({
 
   // Cleanup audio on unmount
   React.useEffect(() => {
+    const currentAudioRefs = audioRefs.current
     return () => {
-      Object.values(audioRefs.current).forEach((audio) => {
+      Object.values(currentAudioRefs).forEach((audio) => {
         audio.pause()
         audio.src = ""
       })
